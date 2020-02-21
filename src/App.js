@@ -1,6 +1,23 @@
 import React from 'react';
-import { Canvas } from 'react-three-fiber';
+import { Canvas, extend, useThree } from 'react-three-fiber';
 import StretchPlane from './components/StretchPlane';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
+extend({ OrbitControls });
+
+function Scene() {
+  const {
+    camera,
+    gl: { domElement }
+  } = useThree();
+
+  return (
+    <>
+      <StretchPlane></StretchPlane>
+      <orbitControls args={[camera, domElement]} />
+    </>
+  );
+}
 
 function App() {
   const onWheel = e => {
@@ -9,7 +26,7 @@ function App() {
 
   return (
     <Canvas onWheel={e => onWheel(e)}>
-      <StretchPlane></StretchPlane>
+      <Scene></Scene>
     </Canvas>
   );
 }
